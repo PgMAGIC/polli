@@ -12,4 +12,15 @@ $(document).ready(function() {
   socket.on('server_message', function(data){
    $('#receiver').append('<li>' + data + '</li>');  
   });
+
+  socket.on('new_poll', function(data){
+  	if(data.type === "choice"){
+  		var count = data.count;
+  		createChoicePoll(count);
+  	} else if(data.type ==="yes_no"){
+		yesNoPoll()
+  	} else if(data.type ==="simple"){
+  		simplePoll()
+  	}
+  })
 });

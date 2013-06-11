@@ -72,11 +72,15 @@ server.get('/', function(req,res){
 });
 
 server.post('/poll', function(req, res){
-  var pollType = req.body.pollType;
+  var pollType = req.body.type;
+  var pollCount = req.body.count || false;
 
-  
+  var polldata ={};
+  polldata.type = pollType;
+  if(pollCount) polldata.count = pollCount;
 
-  console.log(req)
+  io.sockets.emit('new_poll', polldata);
+
   res.end("SUCCESS")
 });
 
@@ -91,8 +95,15 @@ server.get('/admin', function(req, res){
   });
 });
 
-server.get('poll', function(req, res){
-
+server.get('/poll', function(req, res){
+  res.render('client.jade', {
+    locals : { 
+              title : 'Your Page Title'
+             ,description: 'Your Page Description'
+             ,author: 'Your Name'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
 });
 
 

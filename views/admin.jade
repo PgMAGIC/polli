@@ -2,19 +2,20 @@ extends layout
 
 block content
 	div create poll
-		div yes/no
+		div#yesNoControlls yes/no
 		div answer options
-			div 1
-			div 2
-			div 3
-			div 4
-			div 5
-			div 6
-			div 7
-			div 8
-			div 9
-		div single
+			div#choice1Button 1
+			div#choice2Button 2
+			div#choice3Button 3
+			div#choice4Button 4
+			div#choice5Button 5
+			div#choice6Button 6
+			div#choice7Button 7
+			div#choice8Button 8
+			div#choice9Button 9
+		div#simpleButton simple
 	div reset poll
 	div poll results
 
+append footer
 	script(src="/js/poll.js")
