@@ -5,7 +5,7 @@ var connect = require('connect')
     , port = (process.env.PORT || 8081);
 
 var Poll = require('./models/poll.js');
-var myPoll = Poll.create();
+var myPoll = Poll.create("choice", 4);
 
 //Setup Express
 var server = express.createServer();
@@ -17,6 +17,10 @@ server.configure(function(){
     server.use(express.session({ secret: "shhhhhhhhh!"}));
     server.use(connect.static(__dirname + '/static'));
     server.use(server.router);
+});
+
+server.helpers({
+    _: require("underscore")
 });
 
 //setup the errors
@@ -44,9 +48,8 @@ server.listen( port);
 var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client Connected');
-  socket.on('message', function(data){
-    socket.broadcast.emit('server_message',data);
-    socket.emit('server_message',data);
+  socket.on('vote', function(data){
+    myPoll.vote(data);
   });
   socket.on('disconnect', function(){
     console.log('Client Disconnected.');
@@ -78,6 +81,8 @@ server.post('/poll', function(req, res){
   var polldata ={};
   polldata.type = pollType;
   if(pollCount) polldata.count = pollCount;
+
+  myPoll = Poll.create(pollType, pollCount);
 
   io.sockets.emit('new_poll', polldata);
 

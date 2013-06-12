@@ -4,15 +4,8 @@ block content
 	div create poll
 		div#yesNoControlls yes/no
 		div answer options
-			div#choice1Button 1
-			div#choice2Button 2
-			div#choice3Button 3
-			div#choice4Button 4
-			div#choice5Button 5
-			div#choice6Button 6
-			div#choice7Button 7
-			div#choice8Button 8
-			div#choice9Button 9
+			each i in _.range(2,10)
+				div(id="choice#{i}Button") #{i}
 		div#simpleButton simple
 	div reset poll
 	div poll results

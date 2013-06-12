@@ -13,3 +13,7 @@ var simplePoll = function(){
 	$("#controlls>div").addClass('hidden');
 	$("#singleControlls").removeClass('hidden');
 }
+
+var vote = function(vote){
+	socket.emit("vote", vote);
+}

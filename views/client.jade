@@ -1,66 +1,16 @@
 extends layout
 
 block content
-	div(id='controlls')
-		div#yesNoControlls.hidden
-			div yes
-			div no
-		div#singleControlls.hidden
-			div button
-		div#choice1Controlls.hidden
-			div 1
-		div#choice2Controlls.hidden
-			div 1
-			div 2
-		div#choice3Controlls.hidden
-			div 1
-			div 2
-			div 3
-		div#choice4Controlls.hidden
-			div 1
-			div 2
-			div 3
-			div 4
-		div#choice5Controlls.hidden
-			div 1
-			div 2
-			div 3
-			div 4
-			div 5
-		div#choice6Controlls.hidden
-			div 1
-			div 2
-			div 3
-			div 4
-			div 5
-			div 6
-		div#choice7Controlls.hidden
-			div 1
-			div 2
-			div 3
-			div 4
-			div 5
-			div 6
-			div 7
-		div#choice8Controlls.hidden
-			div 1
-			div 2
-			div 3
-			div 4
-			div 5
-			div 6
-			div 7
-			div 8
-		div#choice9Controlls.hidden
-			div 1
-			div 2
-			div 3
-			div 4
-			div 5
-			div 6
-			div 7
-			div 8
-			div 9
+	div#controlls(ng-app = "myApp", ng-controller='ClientCtrl' )
+		div#yesNoControlls(ng-show='isActivePollType("yes_no")')
+			div(onClick="vote('yes');") yes
+			div(onClick="vote('no');") no
+		div#singleControlls(ng-show='isActivePollType("simple")')
+			div(onClick="vote('yes');") button
+		each i in _.range(2,10)
+			div(ng-show='isActivePollType("choice#{i}")')
+				each j in _.range(1,i+1)
+					div(onClick="vote(#{j});") #{j}
 
 append footer  
 	script(src="/js/client.js")
