@@ -3,14 +3,11 @@ extends layout
 block content
 	div#controlls(ng-app = "myApp", ng-controller='ClientCtrl' )
 		div#yesNoControlls(ng-show='isActivePollType("yes_no")')
-			div(onClick="vote('yes');") yes
-			div(onClick="vote('no');") no
+			div(ng-click="vote('yes');") yes
+			div(ng-click="vote('no');") no
 		div#singleControlls(ng-show='isActivePollType("simple")')
-			div(onClick="vote('yes');") button
+			div(ng-click="vote('yes');") button
 		each i in _.range(2,10)
 			div(ng-show='isActivePollType("choice#{i}")')
 				each j in _.range(1,i+1)
-					div(onClick="vote(#{j});") #{j}
-
-append footer  
-	script(src="/js/client.js")
+					div(ng-click="vote(#{j})") #{j}

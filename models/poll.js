@@ -45,6 +45,7 @@ var PollChoice = function(spec){
 
 	that.vote = function(vote){
 		that.votes[vote]+=1;
+		console.log(that.votes)
 	}
 
 	return that;
