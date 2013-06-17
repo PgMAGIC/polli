@@ -8,9 +8,11 @@ block content
 				div.button.half-width(id="choice#{i}Button", ng-click="createPoll('choice', #{i})") #{i}
 		<br style="clear:both;">
 		div#simpleButton.button(ng-click="createPoll('simple')") simple
-		div.button reset poll
+		div.button(ng-click="resetPoll()") reset poll
 		div poll results
 		div#plot
+		div#qrcode 
+			<img src="/qrcode">
 
 append footer
 	script(src="/js/vendor/d3.v3.min.js")

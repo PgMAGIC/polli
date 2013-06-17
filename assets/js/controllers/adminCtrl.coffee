@@ -1,7 +1,5 @@
-
-
 angular.module('myApp').controller 'AdminCtrl', ($scope, socket) ->
-  $scope.chart = d3.select("#plot").append("svg").attr("class", "chart").attr("width", 500).attr("height", 500)
+  $scope.chart = d3.select("#plot").append("svg").attr("class", "chart").attr("width", 500).attr("height", 250)
   socket.on "data:update", (data) ->
     console.log data
     $scope.chart.append("line").attr("x1", 0).attr("x2", 50 * data.length).attr("y1", .5).attr("y2", .5).style "stroke", "#dddddd"
@@ -16,7 +14,9 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, socket) ->
 
     rect.exit().remove()
 
-  $scope.resetPoll = ->
+  $scope.resetPoll = () ->
+    console.log("RESET")
+    socket.emit("poll:reset")
 
   $scope.createPoll = (pollType, count) ->
     console.log "test"

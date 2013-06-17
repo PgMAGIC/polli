@@ -3,6 +3,7 @@ express = require("express")
 io = require("socket.io")
 _ = require("underscore")
 Poll = require("./poll")
+QRCode = require('qrcode');
 
 port = (process.env.PORT or 8081)
 
@@ -61,6 +62,10 @@ io.sockets.on "connection", (socket) ->
   socket.on "disconnect", ->
     console.log "Client Disconnected."
 
+  socket.on "poll:reset", ->
+    console.log "Reset poll"
+    myPoll.reset()
+
 
 server.get "/", (req, res) ->
   res.render "index.jade",
@@ -99,9 +104,15 @@ server.get "/poll", (req, res) ->
       author: "Your Name"
       analyticssiteid: "XXXXXXX"
 
+server.get "/qrcode", (req, res) ->
+  QRCode.draw "http://192.168.100.42:8081/poll", (err, data)->
+    data.pngStream().pipe(res)
+
 
 server.get "/500", (req, res) ->
   throw new Error("This is a 500 Error")
+
+
 
 # server.get "/*", (req, res) ->
 #   console.log(req.url)

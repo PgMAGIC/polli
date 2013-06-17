@@ -10,38 +10,45 @@ module.exports.create = (type, count)->
 
 class Poll
 	constructor : ()->
-		@voterIds = {}
-		@votes = {}
+		@reset()
 
 	voteCheck : (id)=>
 		valid = not @voterIds[id]
-		console.log(@voterIds)
 		@voterIds[id] = true
 		valid
+
+	reset : () ->
+		@voterIds = {}
+		@votes = {}
+
+
 
 class PollChoice extends Poll
 
 	constructor: (@count) ->
 		super()
 		@type = "choice" + @count
-		@votes = {}
-		for i in [1..@count]
-			@votes[i] = 0
-		console.log(@voterIds)
+		@reset()
+		
 
 	vote : (vote, id)=>
 		valid = @voteCheck(id)
 		if valid
-			console.log "Valid vote"
 			@votes[vote]+=1
+
+	reset : () ->
+		console.log("RESET CHOICE")
+		super()
+		@votes = {}
+		for i in [1..@count]
+			@votes[i] = 0
+
 
 class PollYesNo extends Poll
 	type : "yes_no"
 	constructor: () ->
 		super()
-		@votes =
-			yes: 0
-			no: 0	
+		@reset()
 
 	vote: (vote, id)=>
 		if @voteCheck(id)
@@ -50,12 +57,22 @@ class PollYesNo extends Poll
 			else if vote == "yes"
 				@votes.yes+=1
 
+	reset: () ->
+		super()
+		@votes =
+			yes: 0
+			no: 0
+
 class PollSimple extends Poll
 	constructor: () ->
 		super()
-		@votes = {yes : 0}
+		@reset()
 		@type = "simple"
 
 	vote : (id) =>
 		if @voteCheck(id)
 			@votes["yes"]+=1
+
+	reset : ()->
+		super()
+		@votes = {yes : 0}
