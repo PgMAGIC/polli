@@ -55,7 +55,7 @@ io.sockets.on "connection", (socket) ->
     type: myPoll.type
 
   socket.on "vote", (data) ->
-    myPoll.vote data, socket.id
+    myPoll.vote data, socket.handshake.sessionID 
     socket.broadcast.emit "data:update", _.pairs(myPoll.votes)
 
   socket.on "disconnect", ->
