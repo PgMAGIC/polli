@@ -2,12 +2,15 @@ extends layout
 
 block content
 	div(ng-app = "myApp", ng-controller="AdminCtrl") create poll
-		div#yesNoControlls(ng-click="createPoll('yes_no')") yes/no
-		div answer options
+		div#yesNoControlls.button(ng-click="createPoll('yes_no')") yes/no
+		div answer options <br>
 			each i in _.range(2,7)
-				div(id="choice#{i}Button", ng-click="createPoll('choice', #{i})") #{i}
-		div#simpleButton(ng-click="createPoll('simple')") simple
-		div reset poll
+				div.button.half-width(id="choice#{i}Button", ng-click="createPoll('choice', #{i})") #{i}
+		<br style="clear:both;">
+		div#simpleButton.button(ng-click="createPoll('simple')") simple
+		div.button reset poll
 		div poll results
+		div#plot
 
 append footer
+	script(src="/js/vendor/d3.v3.min.js")

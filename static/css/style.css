@@ -93,11 +93,65 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+body, html{
+    height: 100%;
+    background-color: #222222;
+    color: #dddddd;
+    
+    margin: 0;
+}
 
+.full-height{
+    height: 100%;
+}
 
+.button{
+    box-sizing: border-box;
+    width: 100%;
+    /* height: 65px; */
 
+    text-align: center;
+    border: 1px solid white;
 
+    font-size: 40px;
+    font-family: 'Raleway', sans-serif;
 
+    background-color: #333333;
+}
+
+.button2{
+    height: 50%;
+}
+
+.button3{
+    height: 33%;
+}
+
+.button4{
+    height: 25%;
+}
+
+.button5{
+    height: 20%;
+}
+
+.button6{
+    height: 16.666%;
+}
+
+.half-width{
+    float: left;
+    width: 50%;
+}
+
+.button:active{
+    background-color: #555555;
+}
+
+rect{
+    background-color: #dddddd;
+    fill: #dddddd;
+}
 
 
 

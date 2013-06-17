@@ -1,8 +1,8 @@
 var _ = require('underscore');
 
 exports.create = function(type, count){
-	console.log(type)
-	if(type === "choice"){
+	console.log(type + " " + count)
+	if(type.substr(0,6) === "choice"){
   		return PollChoice({count: count});//createChoicePoll(count);
   	} else if(type ==="yes_no"){
 		return PollYesNo();
@@ -13,10 +13,6 @@ exports.create = function(type, count){
 
 var Poll = function(spec){
 	var that = spec || {};
-
-	/*that.vote = function(vote){
-		console.log("Asdf: " + that.votes);
-	}*/
 
 	that.votes = {};
 
@@ -30,8 +26,10 @@ var PollYesNo = function(spec){
 	that.vote = function(vote){
 		if(vote == "no") that.votes.no+=1;
 		else if(vote=== "yes") that.votes.yes+=1;
-		console.log("Votes: " + that.votes.yes);
+		console.log(that.votes);
 	}
+
+	that.type="yes_no";
 
 	return that;
 }
@@ -48,6 +46,8 @@ var PollChoice = function(spec){
 		console.log(that.votes)
 	}
 
+	that.type="choice" + spec.count;
+
 	return that;
 }
 
@@ -57,7 +57,10 @@ var PollSimple = function(spec){
 
 	that.vote = function(vote){
 		that.votes["yes"] += 1;
+		console.log(that.votes)
 	}
+
+	that.type="simple";
 
 	return that;
 }
