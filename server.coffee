@@ -2,7 +2,7 @@ connect = require("connect")
 express = require("express")
 io = require("socket.io")
 _ = require("underscore")
-Poll = require("./models/poll.js")
+Poll = require("./poll")
 
 port = (process.env.PORT or 8081)
 
@@ -51,12 +51,11 @@ server.error (err, req, res, next) ->
 server.listen port
 io = io.listen(server)
 io.sockets.on "connection", (socket) ->
-  console.log "Client Connected"
   socket.emit "new_poll",
     type: myPoll.type
 
   socket.on "vote", (data) ->
-    myPoll.vote data
+    myPoll.vote data, socket.id
     socket.broadcast.emit "data:update", _.pairs(myPoll.votes)
 
   socket.on "disconnect", ->
@@ -73,6 +72,7 @@ server.get "/", (req, res) ->
 
 
 server.post "/poll", (req, res) ->
+  console.log(req.sessionID)
   pollType = req.body.type
   pollCount = req.body.count or false
   polldata = {}
