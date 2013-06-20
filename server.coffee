@@ -5,6 +5,7 @@ _ = require("underscore")
 Poll = require("./poll")
 QRCode = require('qrcode');
 http = require('http')
+dns = require('dns')
 
 
 port = (process.env.PORT or 8081)
@@ -73,16 +74,21 @@ clientChannel = io.of('/client').on "connection", (socket) ->
     adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
   socket.on "disconnect", ->
-    adminChannel.emit "clientcount:update", Object.keys(io.sockets.manager.connected).length
+    console.log "Disconnected!"
+    adminChannel.emit "clientcount:update", Object.keys(io.sockets.clients('client')).length
 
 
 
 adminChannel = io.of('/admin').on "connection", (socket) ->
-  console.log "CONNNNECTTED"
+  console.log "Admin connected"
   socket.on "poll:reset", ->
-    console.log "rseet"
     myPoll.reset()
-    clientChannel.emit "new_poll", type: myPoll.type 
+    clientChannel.emit "new_poll", type: myPoll.type
+    adminChannel.emit "data:update", _.pairs(myPoll.votes)
+
+  socket.on "new_poll", ->
+    adminChannel.emit "data:update", _.pairs(myPoll.votes)
+
 
 
 server.get "/", (req, res) ->
@@ -95,14 +101,17 @@ server.get "/", (req, res) ->
 
 
 server.post "/poll", (req, res) ->
-  console.log(req.sessionID)
+
   pollType = req.body.type
   pollCount = req.body.count or false
   polldata = {}
   pollType += pollCount  if pollCount
   polldata.type = pollType
   myPoll = Poll.create(pollType, pollCount)
+
   clientChannel.emit "new_poll", polldata
+  adminChannel.emit "data:update", polldata
+
   res.end "SUCCESS"
 
 server.get "/admin", (req, res) ->
@@ -123,9 +132,11 @@ server.get "/poll", (req, res) ->
       analyticssiteid: "XXXXXXX"
 
 server.get "/qrcode", (req, res) ->
-  QRCode.draw "http://192.168.100.42:8081/poll", (err, data)->
-    data.pngStream().pipe(res)
-
+  dns.lookup(require('os').hostname(),  (err, add, fam) ->
+    console.log add
+    QRCode.draw "http://"+add + ":" + port + "/poll", (err, data)->
+      data.pngStream().pipe(res)
+  )
 
 server.get "/500", (req, res) ->
   throw new Error("This is a 500 Error")
