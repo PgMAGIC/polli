@@ -14,6 +14,7 @@ class Poll
 
 	voteCheck : (id)=>
 		valid = not @voterIds[id]
+		console.log("Vote was: " + valid + " Id: " + id)
 		@voterIds[id] = true
 		valid
 

@@ -4,11 +4,14 @@ io = require("socket.io")
 _ = require("underscore")
 Poll = require("./poll")
 QRCode = require('qrcode');
+http = require('http')
 
 port = (process.env.PORT or 8081)
 
 myPoll = Poll.create("choice", 4)
-server = express.createServer()
+server = express()
+httpServer = http.createServer(server)
+httpServer.listen(port)
 
 server.configure ->
   server.set "views", __dirname + "/views"
@@ -25,8 +28,8 @@ server.configure ->
   server.use server.router
   
 
-server.helpers _: require("underscore")
-server.error (err, req, res, next) ->
+server.locals._ = require("underscore")
+server.use (err, req, res, next) ->
   if err instanceof NotFound
     res.render "404.jade",
       locals:
@@ -49,18 +52,27 @@ server.error (err, req, res, next) ->
       status: 500
 
 
-server.listen port
-io = io.listen(server)
+io = io.listen(httpServer)
 io.sockets.on "connection", (socket) ->
+
+  socket.broadcast.emit "clientcount:update", Object.keys(io.sockets.manager.connected).length
+
+  cookies = {}
+  socket.handshake.headers.cookie && socket.handshake.headers.cookie.split(';').forEach (cookie) ->
+    parts = cookie.split '='
+    cookies[parts[0].trim()] = (parts[1] || '').trim()
+  
+  pollerId = cookies["connect.sid"]
+
   socket.emit "new_poll",
     type: myPoll.type
 
   socket.on "vote", (data) ->
-    myPoll.vote data, socket.handshake.sessionID 
+    myPoll.vote data, pollerId 
     socket.broadcast.emit "data:update", _.pairs(myPoll.votes)
 
   socket.on "disconnect", ->
-    console.log "Client Disconnected."
+    socket.broadcast.emit "clientcount:update", Object.keys(io.sockets.manager.connected).length
 
   socket.on "poll:reset", ->
     console.log "Reset poll"

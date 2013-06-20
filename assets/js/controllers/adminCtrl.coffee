@@ -1,18 +1,45 @@
 angular.module('myApp').controller 'AdminCtrl', ($scope, socket) ->
-  $scope.chart = d3.select("#plot").append("svg").attr("class", "chart").attr("width", 500).attr("height", 250)
-  socket.on "data:update", (data) ->
-    console.log data
-    $scope.chart.append("line").attr("x1", 0).attr("x2", 50 * data.length).attr("y1", .5).attr("y2", .5).style "stroke", "#dddddd"
-    rect = $scope.chart.selectAll("rect").data(data)
-    rect.enter().append("rect").attr("x", (d, i) ->
-      i * 50
-    ).attr("y", 5).attr("width", 20).attr "height", (d) ->
-      d[1] * 50
+  $scope.chart = d3.select("#plot").append("svg").attr("class", "chart").attr("width", 500).attr("height", 300)
+  $scope.clientCount = 0
 
-    rect.transition().duration(500).attr "height", (d) ->
-      d[1] * 50
+  height = 300
+
+  drawPoll = () ->
+    console.log($scope.clientCount)
+    y = d3.scale.linear().
+      domain([0,$scope.clientCount])
+      .rangeRound([0, height])
+    $scope.chart.append("line").attr("x1", 0)
+      .attr("x2", 50 * $scope.data.length)
+      .attr("y1", height - .5)
+      .attr("y2", height - .5)
+      .style "stroke", "#dddddd"
+    rect = $scope.chart.selectAll("rect").data($scope.data)
+    rect.enter().append("rect")
+      .attr("x", (d, i) ->
+        i * 50
+      )
+      .attr("y", (d) -> height - y(d[1]) - .5)
+      .attr("width", 20)
+      .attr "height", (d) ->
+        y(d[1])
+
+    rect.transition().duration(500)
+      .attr "height", (d) ->
+        y(d[1])
+      .attr("y", (d) -> height - y(d[1]) - .5)
 
     rect.exit().remove()
+
+  socket.on "clientcount:update", (data)->
+    console.log("Update client count " + data)
+    $scope.clientCount = data
+    drawPoll()
+
+  socket.on "data:update", (data) ->
+    $scope.data = data
+    drawPoll()
+
 
   $scope.resetPoll = () ->
     console.log("RESET")
