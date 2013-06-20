@@ -6,6 +6,7 @@ Poll = require("./poll")
 QRCode = require('qrcode');
 http = require('http')
 
+
 port = (process.env.PORT or 8081)
 
 myPoll = Poll.create("choice", 4)
@@ -53,9 +54,9 @@ server.use (err, req, res, next) ->
 
 
 io = io.listen(httpServer)
-io.sockets.on "connection", (socket) ->
-
-  socket.broadcast.emit "clientcount:update", Object.keys(io.sockets.manager.connected).length
+clientChannel = io.of('/client').on "connection", (socket) ->
+  console.log "CLIENT CONNECTED"
+  adminChannel.emit "clientcount:update", Object.keys(io.sockets.clients('client')).length
 
   cookies = {}
   socket.handshake.headers.cookie && socket.handshake.headers.cookie.split(';').forEach (cookie) ->
@@ -69,14 +70,19 @@ io.sockets.on "connection", (socket) ->
 
   socket.on "vote", (data) ->
     myPoll.vote data, pollerId 
-    socket.broadcast.emit "data:update", _.pairs(myPoll.votes)
+    adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
   socket.on "disconnect", ->
-    socket.broadcast.emit "clientcount:update", Object.keys(io.sockets.manager.connected).length
+    adminChannel.emit "clientcount:update", Object.keys(io.sockets.manager.connected).length
 
+
+
+adminChannel = io.of('/admin').on "connection", (socket) ->
+  console.log "CONNNNECTTED"
   socket.on "poll:reset", ->
-    console.log "Reset poll"
+    console.log "rseet"
     myPoll.reset()
+    clientChannel.emit "new_poll", type: myPoll.type 
 
 
 server.get "/", (req, res) ->
@@ -96,7 +102,7 @@ server.post "/poll", (req, res) ->
   pollType += pollCount  if pollCount
   polldata.type = pollType
   myPoll = Poll.create(pollType, pollCount)
-  io.sockets.emit "new_poll", polldata
+  clientChannel.emit "new_poll", polldata
   res.end "SUCCESS"
 
 server.get "/admin", (req, res) ->

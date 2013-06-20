@@ -1,4 +1,4 @@
-angular.module('myApp').controller 'AdminCtrl', ($scope, socket) ->
+angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
   $scope.chart = d3.select("#plot").append("svg").attr("class", "chart").attr("width", 500).attr("height", 300)
   $scope.clientCount = 0
 
@@ -31,19 +31,19 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, socket) ->
 
     rect.exit().remove()
 
-  socket.on "clientcount:update", (data)->
+  adminSocket.on "clientcount:update", (data)->
     console.log("Update client count " + data)
     $scope.clientCount = data
     drawPoll()
 
-  socket.on "data:update", (data) ->
+  adminSocket.on "data:update", (data) ->
     $scope.data = data
     drawPoll()
 
 
   $scope.resetPoll = () ->
     console.log("RESET")
-    socket.emit("poll:reset")
+    adminSocket.emit("poll:reset")
 
   $scope.createPoll = (pollType, count) ->
     console.log "test"

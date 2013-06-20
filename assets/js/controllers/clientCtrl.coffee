@@ -1,4 +1,4 @@
-angular.module('myApp').controller 'ClientCtrl', ($scope, socket) ->
+angular.module('myApp').controller 'ClientCtrl', ($scope, clientSocket) ->
   $scope.pollType = ""
   $scope.hasPolled = false
 
@@ -6,10 +6,10 @@ angular.module('myApp').controller 'ClientCtrl', ($scope, socket) ->
     type is $scope.pollType
 
   $scope.vote = (vote) ->
-    socket.emit "vote", vote
+    clientSocket.emit "vote", vote
     $scope.hasPolled = true
 
-  socket.on "new_poll", (data) ->
+  clientSocket.on "new_poll", (data) ->
     $scope.hasPolled = false
     if data.type.substr(0, 6) is "choice"
       $scope.pollType = data.type
