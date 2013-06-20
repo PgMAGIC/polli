@@ -15,6 +15,11 @@ body, html{
     height: 100%;
 }
 
+.left{
+    float: left;
+}
+
+
 .button{
     box-sizing: border-box;
     width: 100%;
@@ -28,27 +33,28 @@ body, html{
 
     background-color: #333333;
     float: left;
+
+    &.disabled{
+        background-color: lighten(#333333, 40%);
+        color: darken(#dddddd, 30%);
+    }
+
+    &.large-font{
+        font-size: 72px;
+    }
+    
+
+
 }
 
 .button2{
     height: 50%;
 }
 
-.button3{
-    height: 33%;
-}
-
-.button4{
-    height: 25%;
-}
-
-.button5{
-    height: 20%;
-}
-
 .button6{
     height: 33.333%;
         width: 50%;
+        // padding-top: 10%
 }
 
 
