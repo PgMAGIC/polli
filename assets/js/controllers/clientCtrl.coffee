@@ -17,3 +17,6 @@ angular.module('myApp').controller 'ClientCtrl', ($scope, clientSocket) ->
     else if data.type is "yes_no"
       $scope.pollType = "yes_no"
     else $scope.pollType = "simple"  if data.type is "simple"
+
+  clientSocket.on "poll:finished", () ->
+    $scope.hasPolled = true

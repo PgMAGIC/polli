@@ -22,6 +22,9 @@ class Poll
 		@voterIds = {}
 		@votes = {}
 
+	hasVoted : (id) ->
+		!!@voterIds[id]
+
 
 
 class PollChoice extends Poll

@@ -65,9 +65,16 @@ clientChannel = io.of('/client').on "connection", (socket) ->
     cookies[parts[0].trim()] = (parts[1] || '').trim()
   
   pollerId = cookies["connect.sid"]
+  console.log pollerId
+  console.log myPoll
 
-  socket.emit "new_poll",
-    type: myPoll.type
+  # check if already have polled
+  # if redirect to right window
+  if myPoll.hasVoted(pollerId)
+    socket.emit "poll:finished"
+  else
+    socket.emit "new_poll",
+      type: myPoll.type
 
   socket.on "vote", (data) ->
     myPoll.vote data, pollerId 
