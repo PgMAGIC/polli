@@ -1,13 +1,20 @@
 {
-  "name": "YOUR-PROJECT-NAME-HERE",
-  "description": "YOUR PROJECT DESCRIPTION HERE",
-  "author": "YOUR NAME <your@emailaddress.com>",
+  "name": "Polli",
+  "description": "Simple polling tool.",
+  "author": "Viktor Koop <viktor.koop@gmail.com>",
   "version": "0.0.1",
   "dependencies": {
     "connect": "*",
     "express": "*",
     "jade": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "qrcode" : "*",
+    "connect-assets" : "*",
+    "stylus" : "*",
+    "nib" : "*",
+    "underscore" : "*",
+    "canvas" : "*",
+    "coffee-script" : "*"
   },
   "devDependencies": {
     "vows": "*",
