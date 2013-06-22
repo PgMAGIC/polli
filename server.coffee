@@ -94,6 +94,7 @@ adminChannel = io.of('/admin').on "connection", (socket) ->
     adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
   socket.on "new_poll", ->
+    myPoll.reset()
     adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
 

@@ -8,8 +8,8 @@ block content
 			Deine Stimme hat gezählt!
 		div.full-height(ng-show="!hasPolled")
 			div#yesNoControlls.full-height(ng-show='isActivePollType("yes_no")')
-				div.button(ng-click="vote('yes');", class="button2 large-font") yes
-				div.button(ng-click="vote('no');", class="button2 large-font") no
+				div.button(ng-click="vote('yes');", class="button2 large-font") ja
+				div.button(ng-click="vote('no');", class="button2 large-font") nein
 			each i in _.range(2,7)
 				div.full-height(ng-show='isActivePollType("choice#{i}")')
 					each j in _.range(1,7)

@@ -1,9 +1,11 @@
 extends layout
 
 block content
-	div(ng-app = "myApp", ng-controller="AdminCtrl", class="container-fluid")
+	div(ng-app = "myApp", ng-controller="AdminCtrl", class="container-fluid full-height")
+		div(class='page-header hidden-phone') 
+			h1 Polli <small> - jede Stimme zählt.</small> 
 		div.row-fluid 
-			div.span4
+			div.span3
 				div.button(ng-click="createPoll('yes_no')", class="left half-width") j/n
 				each i in _.range(2,7)
 					div.button(id="choice#{i}Button", class="left half-width", ng-click="createPoll('choice', #{i})") #{i}
@@ -11,11 +13,12 @@ block content
 				<br style="clear:both;">
 				//- div#simpleButton.button(ng-click="createPoll('simple')") simple
 				div.button(ng-click="resetPoll()") reset poll
+				div#infos Client-Count: {{clientCount}}
 				div.row-fluid
 					div#qrcode(class="offset2 span8") 
 						img(src="/qrcode")
-			div#plot.span4
-		div#infos Client-Count: {{clientCount}}
+			div#plot.span9.full-height
+		
 		
 
 append footer
