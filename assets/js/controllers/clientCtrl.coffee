@@ -20,3 +20,14 @@ angular.module('myApp').controller 'ClientCtrl', ($scope, clientSocket) ->
 
   clientSocket.on "poll:finished", () ->
     $scope.hasPolled = true
+
+  $(window).resize(()->
+    $('.button').each( (i, elem)->
+      console.log $(elem).height()
+      $(elem).css("line-height", $(elem).height()+"px")
+    )
+  )
+
+  $('.button').each( (i, elem)->
+    $(elem).css("line-height", $(elem).height()+"px")
+  )

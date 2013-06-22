@@ -1,8 +1,9 @@
 extends layout
 
 block content
-	//- h1 Polli
-	div#controlls.full-height(ng-app = "myApp", ng-controller='ClientCtrl' )
+	div#poll-container.full-height(ng-app = "myApp", ng-controller='ClientCtrl')
+		div(class='page-header hidden-phone') 
+			h1 Polli <small> - jede Stimme zählt.</small> 
 		div.full-height(ng-show="hasPolled")
 			Deine Stimme hat gezählt!
 		div.full-height(ng-show="!hasPolled")

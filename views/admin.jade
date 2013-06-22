@@ -1,18 +1,22 @@
 extends layout
 
 block content
-	div(ng-app = "myApp", ng-controller="AdminCtrl") 
-		div.button(ng-click="createPoll('yes_no')", class="left half-width") yes/no
-		each i in _.range(2,7)
-			div.button(id="choice#{i}Button", class="left half-width", ng-click="createPoll('choice', #{i})") #{i}
-		<br style="clear:both;">
-		//- div#simpleButton.button(ng-click="createPoll('simple')") simple
-		div.button(ng-click="resetPoll()") reset poll
-
-		div#plot
+	div(ng-app = "myApp", ng-controller="AdminCtrl", class="container-fluid")
+		div.row-fluid 
+			div.span4
+				div.button(ng-click="createPoll('yes_no')", class="left half-width") j/n
+				each i in _.range(2,7)
+					div.button(id="choice#{i}Button", class="left half-width", ng-click="createPoll('choice', #{i})") #{i}
+						div.
+				<br style="clear:both;">
+				//- div#simpleButton.button(ng-click="createPoll('simple')") simple
+				div.button(ng-click="resetPoll()") reset poll
+				div.row-fluid
+					div#qrcode(class="offset2 span8") 
+						img(src="/qrcode")
+			div#plot.span4
 		div#infos Client-Count: {{clientCount}}
-		div#qrcode 
-			<img src="/qrcode">
+		
 
 append footer
 	script(src="/js/vendor/d3.v3.min.js")

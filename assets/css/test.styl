@@ -1,6 +1,7 @@
 @import 'nib'
 
-global-reset()
+// global-reset()
+
 
 
 body, html{
@@ -8,7 +9,12 @@ body, html{
     background-color: #222222;
     color: #dddddd;
     
-    margin: 0;
+
+}
+
+#poll-container{
+    margin: 0 auto;
+    max-width: 720px;
 }
 
 .full-height{
@@ -27,9 +33,10 @@ body, html{
 
     text-align: center;
     border: 1px solid white;
+    vertical-align: middle;
 
     font-size: 40px;
-    font-family: 'Raleway', sans-serif;
+    // font-family: 'Raleway', sans-serif;
 
     background-color: #333333;
     float: left;
@@ -49,12 +56,17 @@ body, html{
 
 .button2{
     height: 50%;
+    max-width: 360px;
+    max-height: 200px;
 }
 
 .button6{
     height: 33.333%;
-        width: 50%;
-        // padding-top: 10%
+
+    width: 50%;
+    max-width: 240px;
+    max-height: 200px;
+
 }
 
 
@@ -73,23 +85,16 @@ rect{
     fill: #dddddd;
 }
 
-
-/* Large desktop */
-@media (min-width: 1200px) { 
-
-}
  
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-    
-}
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) { 
+@media (max-width: 767px) {
+    body {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
 
-}
- 
-/* Landscape phones and down */
-@media (max-width: 480px) { 
-
+    .button2{
+        height: 50%;
+        max-width: 100% !important;
+        max-height: 50% !important;
+    }
 }

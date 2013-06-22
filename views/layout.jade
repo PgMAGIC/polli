@@ -15,6 +15,10 @@ html.no-js(lang='en')
     meta(name="description", content=description)
     meta(name="author", content=author)
     meta(name="viewport", content='width=device-width, initial-scale=1')
+    
+    != css('reset')
+    link(rel='stylesheet', href="/css/bootstrap.css")
+    link(rel='stylesheet', href="/css/bootstrap-responsive.css")
     link(rel='stylesheet', href='/css/style.css')
 
     != css('test')
@@ -37,6 +41,7 @@ html.no-js(lang='en')
         script(src='/js/vendor/underscore-min.js')
         
         script(src='/js/vendor/angular.min.js')
+        script(src='/js/vendor/bootstrap.min.js')
 
         != js('app')
         != js('services')
@@ -44,3 +49,5 @@ html.no-js(lang='en')
         != js('controllers/clientCtrl')
         != js('filters')
         != js('directives')
+
+        //- script(src="http://192.168.101.41:35729/livereload.js?snipver=1")

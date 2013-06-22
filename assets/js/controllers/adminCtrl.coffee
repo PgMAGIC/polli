@@ -1,5 +1,9 @@
 angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
-  $scope.chart = d3.select("#plot").append("svg").attr("class", "chart").attr("width", 500).attr("height", 300)
+  $scope.chart = d3.select("#plot")
+    .append("svg")
+    .attr("class", "chart")
+    .attr("width", 500)
+    .attr("height", 300)
   $scope.clientCount = 0
 
   height = 300
@@ -40,6 +44,15 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
     $scope.data = data
     drawPoll()
 
+  $(window).resize(()->
+    $('.button').each( (i, elem)->
+      $(elem).css("line-height", $(elem).height()+"px")
+    )
+  )
+
+  $('.button').each( (i, elem)->
+    $(elem).css("line-height", $(elem).height()+"px")
+  )
 
   $scope.resetPoll = () ->
     console.log("RESET")
