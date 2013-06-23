@@ -118,7 +118,7 @@ server.post "/poll", (req, res) ->
   myPoll = Poll.create(pollType, pollCount)
 
   clientChannel.emit "new_poll", polldata
-  adminChannel.emit "data:update", polldata
+  adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
   res.end "SUCCESS"
 
