@@ -88,6 +88,8 @@ clientChannel = io.of('/client').on "connection", (socket) ->
 
 adminChannel = io.of('/admin').on "connection", (socket) ->
   console.log "Admin connected"
+  socket.emit "data:update", _.pairs(myPoll.votes)
+
   socket.on "poll:reset", ->
     myPoll.reset()
     clientChannel.emit "new_poll", type: myPoll.type
