@@ -146,6 +146,15 @@ server.get "/qrcode", (req, res) ->
       data.pngStream().pipe(res)
   )
 
+server.get "/qrcode-bits", (req, res) ->
+  dns.lookup(require('os').hostname(),  (err, add, fam) ->
+    QRCode.drawBitArray "http://"+add + ":" + port + "/poll", (err, data, width)->
+      res.end JSON.stringify({
+        bits: data,
+        width: width
+      })
+  )
+
 server.get "/500", (req, res) ->
   throw new Error("This is a 500 Error")
 

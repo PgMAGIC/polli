@@ -15,10 +15,9 @@ block content
 				div.button(ng-click="resetPoll()") reset poll
 				div#infos Client-Count: {{clientCount}}
 				div.row-fluid.hidden-phone
-					div#qrcode(class="offset2 span8") 
-						img(src="/qrcode")
+					qrcode(id="qrcode-svg", src="/qrcode-bits", class="offset1 span10")
 			div#plot.span9.full-height
-		
+			
 		
 
 append footer
