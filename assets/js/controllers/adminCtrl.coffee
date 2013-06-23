@@ -6,7 +6,7 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
     .attr("viewBox", "0 0 1200 500")
 
   ratio = 2/3
-  $(".chart").attr("height", $(".chart").width() * ratio);
+  $(".chart").attr("height", $(".chart").parent().width() * ratio);
 
   $scope.clientCount = 0
 
@@ -97,7 +97,8 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
       $(elem).css("line-height", $(elem).height()+"px")
     )
 
-    $(".chart").attr("height", $(".chart").width() * ratio);
+    console.log $(".chart").width()
+    $(".chart").attr("height", $(".chart").parent().width() * ratio);
   )
 
   $('.button').each( (i, elem)->
