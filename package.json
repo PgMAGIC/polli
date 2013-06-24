@@ -14,7 +14,8 @@
     "nib" : "*",
     "underscore" : "*",
     "canvas" : "*",
-    "coffee-script" : "*"
+    "coffee-script" : "*",
+    "q" : "*"
   },
   "devDependencies": {
     "vows": "*",

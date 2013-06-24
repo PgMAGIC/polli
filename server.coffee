@@ -6,9 +6,26 @@ Poll = require("./poll")
 QRCode = require('qrcode');
 http = require('http')
 dns = require('dns')
-
+Q = require('q')
 
 port = (process.env.PORT or 8081)
+ 
+
+getServerIp = () ->
+  deferred = Q.defer()
+  if process.env.SERVER_IP
+    Q.fcall () ->
+      process.env.SERVER_IP
+  else  
+    dns.lookup(require('os').hostname(),  (err, add, fam) ->
+      if err
+        deferred.reject new Error(err)
+      else
+        deferred.resolve add
+    )
+    deferred.promise
+
+ipPromise = getServerIp()
 
 myPoll = Poll.create("choice", 4)
 server = express()
@@ -149,13 +166,21 @@ server.get "/qrcode", (req, res) ->
   )
 
 server.get "/qrcode-bits", (req, res) ->
-  dns.lookup(require('os').hostname(),  (err, add, fam) ->
+  ipPromise.then((add) ->
+    console.log "resolved"
     QRCode.drawBitArray "http://"+add + ":" + port + "/poll", (err, data, width)->
       res.end JSON.stringify({
         bits: data,
         width: width
       })
+  , (reason) -> 
+    QRCode.drawBitArray "Bitte kontaktieren Sie den Serveradmin.", (err, data, width)->
+      res.end JSON.stringify({
+        bits: data,
+        width: width
+      })
   )
+  
 
 server.get "/500", (req, res) ->
   throw new Error("This is a 500 Error")
