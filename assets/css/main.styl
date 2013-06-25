@@ -1,9 +1,25 @@
+
 @import 'nib'
 
-body, html{
-    height: 100%;
-    background-color: #222222;
-    color: #dddddd;
+// color1 = #552244
+// color2 = #dddddd
+// color1 = #428681
+// color2 = #dddddd
+
+color1 = #222222
+color2 = #dddddd
+
+body, html
+    height 100%
+    background-color color1
+    color color2
+
+.light{
+    fill color2
+}
+
+.dark{
+    fill color1
 }
 
 #poll-feedback{
@@ -19,13 +35,8 @@ body, html{
 }
 
 #qrcode-svg{
-    background-color: #dddddd;
-
-    rect{
-        stroke: none;
-    }
-
-
+    margin-top: 10px;
+    background-color: color2;
 }
 
 .full-height{
@@ -43,18 +54,17 @@ body, html{
     height: 65px; 
 
     text-align: center;
-    border: 1px solid white;
+    border: 1px solid color2;
     vertical-align: middle;
 
     font-size: 40px;
-    // font-family: 'Raleway', sans-serif;
 
-    background-color: #333333;
+    background-color: lighten(color1, 10%);
     float: left;
 
     &.disabled{
-        background-color: lighten(#333333, 40%);
-        color: darken(#dddddd, 30%);
+        background-color: lighten(color1, 50%);
+        color: darken(color2, 30%);
     }
 
     &.large-font{
@@ -94,11 +104,15 @@ body, html{
 
 
 .chart{
-    background: #111111;
+    background: darken(color1, 30%);
 
     rect{
-        fill: #dddddd;
+        fill: color2;
     }
+}
+
+#plot{
+    border: 1px solid color2;
 }
 
  

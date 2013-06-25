@@ -13,9 +13,9 @@ block content
 				<br style="clear:both;">
 				//- div#simpleButton.button(ng-click="createPoll('simple')") simple
 				div.button(ng-click="resetPoll()") reset poll
-				div#infos Client-Count: {{clientCount}}
-				div.row-fluid.hidden-phone
-					qrcode(id="qrcode-svg", src="/qrcode-bits", class="offset1 span10")
+				//- div#infos Client-Count: {{clientCount}}
+				div.row-fluid
+					qrcode(id="qrcode-svg", class-dark="dark", class-light="light", src="/qrcode-bits", class="span12")
 			div#plot.span9.full-height
 			
 		

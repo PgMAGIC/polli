@@ -13,6 +13,12 @@ angular.module("myApp.directives", [])
 		"controller" : ($scope, $http) ->
 			
 		"link": (scope, iElem, iAttr) ->
+			lightColor = iAttr['colorLight'] || '#dddddd'
+			darkColor = iAttr['colorDark'] || '#222222'
+
+			classDark = iAttr['classDark'] || ''
+			classLight = iAttr['classLight'] || ''
+
 			$(window).resize () ->
 				$(iElem[0]).attr("height", $(iElem[0]).width())
 			$http.get(iAttr.src).success (data) ->
@@ -33,7 +39,10 @@ angular.module("myApp.directives", [])
 					.attr("y", (d,i) -> x(Math.floor( i / rowCount)) + offset)
 					.attr("height", x.rangeBand)
 					.attr("fill", (d) -> 
-						if d then '#222222' else '#dddddd'
+						if d then darkColor else lightColor
+					)
+					.attr("class", (d) ->
+						if d then classDark else classLight
 					)
 
 				$(iElem[0]).attr("height", $(iElem[0]).width())
