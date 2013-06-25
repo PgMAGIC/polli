@@ -8,19 +8,22 @@
 
 color1 = #222222
 color2 = #dddddd
+color3 = #dfe214
 
 body, html
     height 100%
     background-color color1
     color color2
 
-.light{
-    fill color2
-}
+svg
+    .light
+        fill color2
 
-.dark{
-    fill color1
-}
+    .dark
+        fill color1
+    .highlight
+        fill color3 !important
+
 
 #poll-feedback{
     margin-top: 30px;

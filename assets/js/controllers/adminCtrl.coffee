@@ -18,7 +18,7 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
 
 
   drawPoll = () ->
-    console.log $scope.data
+    max = d3.max($scope.data, (d) -> d[1])
     leftOffset = 50
     barWidth = (width - leftOffset)/($scope.data.length * 2)
     xOrd = d3.scale.ordinal().domain(d3.range($scope.data.length)).rangeBands([0, width], .20)
@@ -37,6 +37,7 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
       .attr("width", xOrd.rangeBand())
       .attr "height", (d) ->
         y(d[1])
+      .attr("class", (d) -> 'highlight' if d[1] == max)
 
     rect.transition().duration(500)
       .attr "height", (d) ->
@@ -44,6 +45,7 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
       .attr("width", xOrd.rangeBand())
       .attr("x", (d, i) -> xOrd(i))
       .attr("y", (d) -> height - y(d[1]) - .5)
+      .attr("class", (d) -> 'highlight' if d[1] == max)
 
     rect.exit().remove()
 
