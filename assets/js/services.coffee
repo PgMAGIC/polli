@@ -1,38 +1,24 @@
-app.factory('clientSocket', ($rootScope) ->
-  socket = io.connect("/client")
+bindSocket = (scope, channelName) ->
+  socket = io.connect(channelName)
   {
     on: (eventName, callback) ->
       socket.on eventName,  () ->
         args = arguments
-        $rootScope.$apply( () ->
+        scope.$apply () ->
           callback.apply(socket, args)
-        )
     ,
     emit: (eventName, data, callback) ->
       socket.emit eventName, data, () ->
-        args = arguments;
-        $rootScope.$apply () ->
+        args = arguments
+        scope.$apply () ->
           if (callback)
             callback.apply(socket, args)
   }
-)
 
-app.factory('adminSocket',  ($rootScope) ->
-  socket = io.connect("/admin")
-  {
-    on: (eventName, callback) ->
-      socket.on eventName,  () ->
-        args = arguments
-        $rootScope.$apply () ->
-          callback.apply(socket, args)
-    ,
-    emit: (eventName, data, callback) ->
-      socket.emit eventName, data, () ->
-        args = arguments
-        $rootScope.$apply () ->
-          if (callback)
-            callback.apply(socket, args)
-  }
-)
+app.factory 'clientSocket', ($rootScope) ->
+  bindSocket $rootScope, "/client"
+
+app.factory 'adminSocket',  ($rootScope) ->
+  bindSocket $rootScope, "/admin"
 
 angular.module("myApp.services", [])
