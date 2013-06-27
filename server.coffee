@@ -42,6 +42,7 @@ server.use (err, req, res, next) ->
       status: 404
 
   else
+    console.log err
     res.render "500.jade",
       locals:
         title: "The Server Encountered an Error"
@@ -51,6 +52,7 @@ server.use (err, req, res, next) ->
         error: err
 
       status: 500
+
 
 
 io = io.listen(httpServer)
