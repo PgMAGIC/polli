@@ -15,7 +15,7 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
 
   $scope.data = []
 
-
+  $scope.showQR = true
 
   drawPoll = () ->
     max = d3.max($scope.data, (d) -> d[1])
@@ -107,8 +107,12 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
     $(elem).css("line-height", $(elem).height()+"px")
   )
 
+
+
+  $scope.toggle = ()->
+    $scope.showQR = !$scope.showQR
+
   $scope.resetPoll = () ->
-    console.log("RESET")
     adminSocket.emit("poll:reset")
 
   $scope.createPoll = (pollType, count) ->
