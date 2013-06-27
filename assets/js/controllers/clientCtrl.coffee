@@ -9,7 +9,7 @@ angular.module('myApp').controller 'ClientCtrl', ($scope, clientSocket) ->
     clientSocket.emit "vote", vote
     $scope.hasPolled = true
 
-  clientSocket.on "new_poll", (data) ->
+  clientSocket.on "poll:new", (data) ->
     $scope.hasPolled = false
     if data.type.substr(0, 6) is "choice"
       $scope.pollType = data.type

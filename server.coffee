@@ -72,7 +72,7 @@ clientChannel = io.of('/client').on "connection", (socket) ->
   if myPoll.hasVoted(pollerId)
     socket.emit "poll:finished"
   else
-    socket.emit "new_poll",
+    socket.emit "poll:new",
       type: myPoll.type
 
   socket.on "vote", (data) ->
@@ -91,10 +91,10 @@ adminChannel = io.of('/admin').on "connection", (socket) ->
 
   socket.on "poll:reset", ->
     myPoll.reset()
-    clientChannel.emit "new_poll", type: myPoll.type
+    clientChannel.emit "poll:new", type: myPoll.type
     adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
-  socket.on "new_poll", ->
+  socket.on "poll:new", ->
     myPoll.reset()
     adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
@@ -112,7 +112,7 @@ server.post "/poll", (req, res) ->
   polldata.type = pollType
   myPoll = Poll.create(pollType, pollCount)
 
-  clientChannel.emit "new_poll", polldata
+  clientChannel.emit "poll:new", polldata
   adminChannel.emit "data:update", _.pairs(myPoll.votes)
 
   res.end "SUCCESS"
