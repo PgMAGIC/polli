@@ -9,23 +9,8 @@ dns = require('dns')
 Q = require('q')
 
 port = (process.env.PORT or 8081)
- 
 
-getServerIp = () ->
-  deferred = Q.defer()
-  if process.env.SERVER_IP
-    Q.fcall () ->
-      process.env.SERVER_IP
-  else  
-    dns.lookup(require('os').hostname(),  (err, add, fam) ->
-      if err
-        deferred.reject new Error(err)
-      else
-        deferred.resolve add
-    )
-    deferred.promise
-
-ipPromise = getServerIp()
+ipPromise = require('./serverInfo').getServerIp()
 
 myPoll = Poll.create("choice", 4)
 server = express()
@@ -39,13 +24,10 @@ server.configure ->
 
   server.use connect.bodyParser()
   server.use express.cookieParser()
-  server.use require('connect-assets')(
-    
-  )
+  server.use require('connect-assets')()
   server.use express.session(secret: "shhhhhhhhh!")
   server.use connect.static(__dirname + "/static")
   server.use server.router
-  
 
 server.locals._ = require("underscore")
 server.use (err, req, res, next) ->
@@ -119,13 +101,7 @@ adminChannel = io.of('/admin').on "connection", (socket) ->
 
 
 server.get "/", (req, res) ->
-  res.render "index.jade",
-    locals:
-      title: "Your Page Title"
-      description: "Your Page Description"
-      author: "Your Name"
-      analyticssiteid: "XXXXXXX"
-
+  res.redirect "/poll"
 
 server.post "/poll", (req, res) ->
 
@@ -147,8 +123,6 @@ server.get "/admin", (req, res) ->
       title: "Your Page Title"
       description: "Your Page Description"
       author: "Your Name"
-      analyticssiteid: "XXXXXXX"
-
 
 server.get "/poll", (req, res) ->
   res.render "client.jade",
@@ -156,14 +130,6 @@ server.get "/poll", (req, res) ->
       title: "Your Page Title"
       description: "Your Page Description"
       author: "Your Name"
-      analyticssiteid: "XXXXXXX"
-
-server.get "/qrcode", (req, res) ->
-  dns.lookup(require('os').hostname(),  (err, add, fam) ->
-    console.log add
-    QRCode.draw "http://"+add + ":" + port + "/poll", (err, data)->
-      data.pngStream().pipe(res)
-  )
 
 server.get "/qrcode-bits", (req, res) ->
   ipPromise.then((add) ->
