@@ -9,6 +9,9 @@ block content
                 | Polli <small> - jede Stimme zählt.</small> 
         div.row-fluid 
             div.span3
+                div.row-fluid
+                    div#qr-container(class="collapse in")
+                        qrcode(id="qrcode-svg", class-dark="dark", class-light="light", src="/qrcode-bits", class="span12")
                 div.button(ng-click="createPoll('yes_no')", class="left half-width") j/n
                 each i in _.range(2,7)
                     div.button(id="choice#{i}Button", class="left half-width", ng-click="createPoll('choice', #{i})") #{i}
@@ -16,9 +19,7 @@ block content
                 div.button(ng-click="resetPoll()") reset <i class="icon-refresh"></i>
                 //- div#infos Client-Count: {{clientCount}}
                 div(class="visible-phone button", ng-click="showQR = !showQR", data-toggle="collapse", data-target="#qr-container") QR-Code
-                div.row-fluid
-                    div#qr-container(class="collapse in")
-                        qrcode(id="qrcode-svg", class-dark="dark", class-light="light", src="/qrcode-bits", class="span12")
+
             div#plot.span9.full-height
             
 append footer
