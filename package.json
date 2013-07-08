@@ -8,19 +8,23 @@
     "express": "*",
     "jade": "*",
     "socket.io": "*",
-    "qrcode" : "*",
-    "connect-assets" : "*",
-    "stylus" : "*",
-    "nib" : "*",
-    "underscore" : "*",
-    "canvas" : "*",
-    "coffee-script" : "*",
-    "q" : "*"
+    "qrcode": "*",
+    "connect-assets": "*",
+    "stylus": "*",
+    "nib": "*",
+    "underscore": "*",
+    "canvas": "*",
+    "coffee-script": "*",
+    "q": "*"
   },
   "devDependencies": {
-    "vows": "*",
-	"mocha": "*",
-	"should": "*"
+    "vows": "~0.7.0",
+    "mocha": "~1.12.0",
+    "should": "~1.2.2",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.9",
+    "grunt-bower-task": "~0.2.3",
+    "grunt-contrib-watch": "~0.4.4"
   },
   "engine": "node >= 0.6.6"
 }

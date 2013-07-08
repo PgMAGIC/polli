@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "jquery": "*",
+    "angular": "~1.0.7",
+    "bootstrap": "~2.3.2",
+    "d3": "~3.2.4",
+    "underscore": "~1.5.1"
+  },
+  "exportsOverride": {
+  	"underscore" : {
+  		"js" : "*.js"
+  	},
+  	"jquery" : {
+  		"js" : "*.js"
+  	},
+  	"d3" : {
+  		"js" : "*.js"
+  	},
+  	"bootstrap" : {
+  		"js" : "docs/assets/js/bootstrap*.js",
+  		"css" : "docs/assets/css/*.css"
+  	},
+  	"angular" : {
+  		"js" : "*.js"
+  	}
+
+  }
+}
