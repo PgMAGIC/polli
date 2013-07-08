@@ -1,4 +1,4 @@
-angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
+angular.module('myApp').controller 'AdminCtrl', ['$scope', 'adminSocket',($scope, adminSocket) ->
   $scope.chart = d3.select("#plot")
     .append("svg")
     .attr("class", "chart")
@@ -125,7 +125,7 @@ angular.module('myApp').controller 'AdminCtrl', ($scope, adminSocket) ->
         count: count
     ).then (res) ->
       console.log "RESPONSE: " + res
-
+]
 
 #TODO reset graph
 #create new model

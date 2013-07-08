@@ -1,5 +1,5 @@
 angular.module("myApp.directives", [])
-.directive("qrcode", ($http) ->
+.directive("qrcode", ["$http", ($http) ->
 	{
 		"restrict" : "E",
 		"scope" : {
@@ -50,4 +50,4 @@ angular.module("myApp.directives", [])
 			
 		"template" : "<svg id class viewBox='0 0 500 500'>  </svg>"
 	}
-)
+])
