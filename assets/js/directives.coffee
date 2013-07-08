@@ -10,8 +10,9 @@ angular.module("myApp.directives", [])
 			"height" : "@"
 		},
 		"replace" : true,
-		"controller" : ($scope, $http) ->
+		"controller" : ["$scope", "$http", ($scope, $http) ->
 			
+		]
 		"link": (scope, iElem, iAttr) ->
 			lightColor = iAttr['colorLight'] || '#dddddd'
 			darkColor = iAttr['colorDark'] || '#222222'
