@@ -1,2 +1,8 @@
 node_modules
 .Guardfile.swp
+static/css/bootstrap
+static/js/angular
+static/js/bootstrap
+static/js/d3
+static/js/jquery
+static/js/underscore
