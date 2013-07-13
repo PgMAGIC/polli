@@ -1,4 +1,4 @@
-angular.module('myApp').controller 'ClientCtrl', ($scope, clientSocket) ->
+angular.module('myApp').controller 'ClientCtrl', ['$scope', 'clientSocket', ($scope, clientSocket) ->
   $scope.pollType = ""
   $scope.hasPolled = false
 
@@ -31,3 +31,4 @@ angular.module('myApp').controller 'ClientCtrl', ($scope, clientSocket) ->
   $('.button').each( (i, elem)->
     $(elem).css("line-height", $(elem).height()+"px")
   )
+]

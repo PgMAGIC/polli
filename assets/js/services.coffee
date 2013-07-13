@@ -15,10 +15,12 @@ bindSocket = (scope, channelName) ->
             callback.apply(socket, args)
   }
 
-app.factory 'clientSocket', ($rootScope) ->
+app.factory 'clientSocket', ["$rootScope", ($rootScope) ->
   bindSocket $rootScope, "/client"
+]
 
-app.factory 'adminSocket',  ($rootScope) ->
+app.factory 'adminSocket',  ["$rootScope", ($rootScope) ->
   bindSocket $rootScope, "/admin"
+]
 
 angular.module("myApp.services", [])

@@ -5,8 +5,6 @@ module.exports.create = (type, count)->
 		new PollChoice(count)
 	else if type == "yes_no"
 		new PollYesNo()
-	else if type == "simple"
-		new PollSimple()
 
 class Poll
 	constructor : ()->
@@ -25,8 +23,6 @@ class Poll
 	hasVoted : (id) ->
 		!!@voterIds[id]
 
-
-
 class PollChoice extends Poll
 
 	constructor: (@count) ->
@@ -41,7 +37,6 @@ class PollChoice extends Poll
 			@votes[vote]+=1
 
 	reset : () ->
-		console.log("RESET CHOICE")
 		super()
 		@votes = {}
 		for i in [1..@count]
@@ -67,16 +62,4 @@ class PollYesNo extends Poll
 			yes: 0
 			no: 0
 
-class PollSimple extends Poll
-	constructor: () ->
-		super()
-		@reset()
-		@type = "simple"
 
-	vote : (id) =>
-		if @voteCheck(id)
-			@votes["yes"]+=1
-
-	reset : ()->
-		super()
-		@votes = {yes : 0}
